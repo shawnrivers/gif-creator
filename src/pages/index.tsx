@@ -12,38 +12,42 @@ type FileDropZoneProps = {
 };
 
 const FileDropZone: React.FC<FileDropZoneProps> = props => {
-  const handleDrop = (files: File[]) => {
-    console.log('File dropped', files);
-    if (files.length !== 1) {
-      props.onFileLoadFailed(
-        "You' are trying to upload too many files. Please only upload one file once."
-      );
-      return;
-    }
-    const file = files[0];
+  const { onFileLoaded, onFileLoadFailed } = props;
 
-    if (!VALID_FILE_TYPES.includes(file.type)) {
-      props.onFileLoadFailed('Invalid file type.');
-      return;
-    }
+  const handleDrop = React.useCallback(
+    (files: File[]) => {
+      if (files.length !== 1) {
+        onFileLoadFailed(
+          "You' are trying to upload too many files. Please only upload one file once."
+        );
+        return;
+      }
 
-    props.onFileLoaded(file);
-  };
-  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    console.log('File in drop zone');
-  };
+      const file = files[0];
 
-  const { getRootProps, getInputProps } = useDropzone({
+      if (!VALID_FILE_TYPES.includes(file.type)) {
+        onFileLoadFailed('Invalid file type.');
+        return;
+      }
+
+      onFileLoaded(file);
+    },
+    [onFileLoadFailed, onFileLoaded]
+  );
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
-    onDragOver: handleDragOver,
     multiple: false,
   });
 
   return (
     <div
       className={joinClassNames(
-        'w-40 h-40 bg-gray-400 border-gray-900 rounded-lg border-2 flex items-center content-center cursor-pointer',
+        `w-40 h-40 ${
+          isDragActive
+            ? 'bg-gray-200 border-gray-500 border-dashed'
+            : 'bg-gray-400 border-gray-900 border-solid'
+        } rounded-lg border-2 flex items-center content-center cursor-pointer`,
         props.className
       )}
       {...getRootProps()}
@@ -63,6 +67,7 @@ const Home: React.FC = () => {
     FileDropZoneProps['onFileLoadFailed']
   >(
     message => {
+      setSourceVideo(null);
       setWarningText(message);
       setIsWarningDialogOpen(true);
     },
