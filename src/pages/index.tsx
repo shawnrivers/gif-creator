@@ -11,7 +11,10 @@ const Home: React.FC = () => {
   const [isWarningDialogOpen, setIsWarningDialogOpen] = React.useState(false);
   const [warningText, setWarningText] = React.useState('');
 
-  const handleFileUploadFail = React.useCallback<
+  const handleLoadFile = React.useCallback((file: File) => {
+    setSourceVideo(file);
+  }, []);
+  const handleFileLoadFail = React.useCallback<
     FileDropZoneProps['onFileLoadFailed']
   >(
     message => {
@@ -25,7 +28,7 @@ const Home: React.FC = () => {
     setIsWarningDialogOpen(false);
   }, []);
 
-  const { ready, result, convertToGif } = useGifConverter();
+  const { ready, processing, result, convertToGif } = useGifConverter();
   const handleClickConvertToGif = React.useCallback(() => {
     if (sourceVideo === null) {
       return;
@@ -38,34 +41,42 @@ const Home: React.FC = () => {
       <h1 className="text-4xl font-bold">GIF Creator</h1>
       <FileDropZone
         className="mt-8"
-        onFileLoaded={file => {
-          setSourceVideo(file);
-        }}
-        onFileLoadFailed={handleFileUploadFail}
+        onFileLoaded={handleLoadFile}
+        onFileLoadFailed={handleFileLoadFail}
       />
       {sourceVideo && (
-        <div className="mt-8">
+        <div className="mt-8 flex flex-col justify-center">
           <section>
-            <h2 className="text-xl mb-2">Source Video Preview</h2>
+            <h2 className="text-xl font-bold mb-2">Source Video Preview</h2>
             <video
               controls
               autoPlay
               loop
-              width={300}
+              className="w-80 h-80 object-contain"
               src={URL.createObjectURL(sourceVideo)}
             ></video>
             <p className="mt-2">Source size: {formatBytes(sourceVideo.size)}</p>
           </section>
           {ready && (
-            <Button className="mt-8" onClick={handleClickConvertToGif}>
-              Convert to GIF
-            </Button>
+            <div>
+              <Button
+                className="mt-8"
+                processing={processing}
+                onClick={handleClickConvertToGif}
+              >
+                Convert to GIF
+              </Button>
+            </div>
           )}
           {result && (
             <section className="mt-8">
-              <h2 className="text-xl mb-2">Result GIF Preview</h2>
+              <h2 className="text-xl font-bold mb-2">Result</h2>
               <a href={result.url} download className="cursor-pointer">
-                <img width={300} src={result.url} alt="Result GIF" />
+                <img
+                  src={result.url}
+                  alt="Result GIF"
+                  className="w-80 h-80 object-contain"
+                />
               </a>
               <p className="mt-2">Result size: {formatBytes(result.size)}</p>
             </section>

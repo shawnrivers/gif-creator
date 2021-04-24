@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useDropzone } from 'react-dropzone';
+import type { DropzoneOptions } from 'react-dropzone';
 import { joinClassNames } from 'utils/class';
 
 const VALID_FILE_TYPES = ['video/mp4'];
@@ -13,8 +14,8 @@ export type FileDropZoneProps = {
 export const FileDropZone: React.FC<FileDropZoneProps> = props => {
   const { onFileLoaded, onFileLoadFailed } = props;
 
-  const handleDrop = React.useCallback(
-    (files: File[]) => {
+  const handleDrop = React.useCallback<DropzoneOptions['onDrop']>(
+    files => {
       if (files.length !== 1) {
         onFileLoadFailed('Please only upload one file at a time.');
         return;
