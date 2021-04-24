@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import { Button } from './Button';
 
 type WarningDialogProps = {
   open: boolean;
@@ -52,12 +53,9 @@ export const WarningDialog: React.FC<WarningDialogProps> = props => {
               <Dialog.Description className="text-xl mt-4 text-gray-900">
                 {props.text}
               </Dialog.Description>
-              <button
-                className="px-4 py-2 mt-4 text-sm bg-gray-600 text-white border border-transparent rounded-md"
-                onClick={props.onClose}
-              >
+              <Button className="mt-4" onClick={props.onClose}>
                 OK
-              </button>
+              </Button>
             </div>
           </Transition.Child>
         </div>
