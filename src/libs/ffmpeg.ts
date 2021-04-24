@@ -6,6 +6,16 @@ const ffmpeg = createFFmpeg();
 const SOURCE_FILE_NAME = 'source.mp4';
 const RESULT_FILE_NAME = 'target.gif';
 
+export type FrameRate = 'Default' | '24 fps' | '12 fps' | '8 fps';
+export type Resolution = '1.0' | '0.75' | '0.5';
+export const FRAME_RATE_OPTIONS: FrameRate[] = [
+  'Default',
+  '24 fps',
+  '12 fps',
+  '8 fps',
+];
+export const RESOLUTION_OPTIONS: Resolution[] = ['1.0', '0.75', '0.5'];
+
 type GifResult = {
   url: string;
   size: number;

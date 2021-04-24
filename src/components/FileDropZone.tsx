@@ -45,7 +45,7 @@ export const FileDropZone: React.FC<FileDropZoneProps> = props => {
           isDragActive
             ? 'bg-gray-200 border-gray-500 border-dashed'
             : 'bg-gray-400 border-gray-900 border-solid'
-        } max-w-4xl min-h-full px-8 py-16 rounded-lg border-2 flex items-center justify-center cursor-pointer`,
+        } max-w-4xl min-h-full px-8 py-12 rounded-lg border-2 shadow-md flex items-center justify-center cursor-pointer`,
         props.className
       )}
       {...getRootProps()}

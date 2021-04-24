@@ -1,10 +1,16 @@
 import * as React from 'react';
-
 import { Button } from 'components/Button';
 import { FileDropZoneProps, FileDropZone } from 'components/FileDropZone';
 import { WarningDialog } from 'components/WarningDialog';
-import { useGifConverter } from 'libs/ffmpeg';
+import {
+  FrameRate,
+  FRAME_RATE_OPTIONS,
+  Resolution as Resolution,
+  RESOLUTION_OPTIONS,
+  useGifConverter,
+} from 'libs/ffmpeg';
 import { formatBytes } from 'utils/math';
+import { Select } from 'components/Select';
 
 const Home: React.FC = () => {
   const [sourceVideo, setSourceVideo] = React.useState<File>();
@@ -26,6 +32,15 @@ const Home: React.FC = () => {
   );
   const handleCloseWarningDialog = React.useCallback(() => {
     setIsWarningDialogOpen(false);
+  }, []);
+
+  const [frameRate, setFrameRate] = React.useState<FrameRate>('Default');
+  const [resolution, setResolution] = React.useState<Resolution>('1.0');
+  const handleChangeFrameRate = React.useCallback((frameRate: FrameRate) => {
+    setFrameRate(frameRate);
+  }, []);
+  const handleChangeResolution = React.useCallback((resolution: Resolution) => {
+    setResolution(resolution);
   }, []);
 
   const { ready, processing, result, convertToGif } = useGifConverter();
@@ -58,15 +73,39 @@ const Home: React.FC = () => {
             <p className="mt-2">Source size: {formatBytes(sourceVideo.size)}</p>
           </section>
           {ready && (
-            <div>
-              <Button
-                className="mt-8"
-                processing={processing}
-                onClick={handleClickConvertToGif}
-              >
-                Convert to GIF
-              </Button>
-            </div>
+            <>
+              <section className="mt-8">
+                <h3 className="text-lg font-semibold">Options</h3>
+                <div className="flex flex-wrap justify-center mt-2">
+                  <div className="m-2">
+                    <label htmlFor="fps">Frame rate</label>
+                    <Select
+                      id="fps"
+                      options={FRAME_RATE_OPTIONS}
+                      className="mt-2"
+                      onChange={handleChangeFrameRate}
+                    />
+                  </div>
+                  <div className="m-2">
+                    <label htmlFor="fps">Resolution</label>
+                    <Select
+                      id="fps"
+                      options={RESOLUTION_OPTIONS}
+                      className="mt-2"
+                      onChange={handleChangeResolution}
+                    />
+                  </div>
+                </div>
+              </section>
+              <section className="mt-6">
+                <Button
+                  processing={processing}
+                  onClick={handleClickConvertToGif}
+                >
+                  Convert to GIF
+                </Button>
+              </section>
+            </>
           )}
           {result && (
             <section className="mt-8">

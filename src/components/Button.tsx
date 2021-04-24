@@ -11,9 +11,9 @@ export const Button: React.FC<
   return (
     <button
       className={joinClassNames(
-        `inline-flex items-center justify-center px-4 py-2 text-sm ${
+        `inline-flex items-center justify-center px-4 py-2 ${
           processing ? 'bg-red-500' : 'bg-gray-600'
-        } text-white border border-transparent rounded-md`,
+        } text-white shadow-md rounded-md`,
         className
       )}
       {...restProps}
