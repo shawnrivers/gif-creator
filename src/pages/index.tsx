@@ -1,6 +1,9 @@
+import * as React from 'react';
+
+import { Button } from 'components/Button';
 import { FileDropZoneProps, FileDropZone } from 'components/FileDropZone';
 import { WarningDialog } from 'components/WarningDialog';
-import * as React from 'react';
+import { useGifConverter } from 'libs/ffmpeg';
 
 const Home: React.FC = () => {
   const [sourceVideo, setSourceVideo] = React.useState<File>();
@@ -17,10 +20,17 @@ const Home: React.FC = () => {
     },
     [setIsWarningDialogOpen, setWarningText]
   );
-
-  const handleCloseWarningDialog = () => {
+  const handleCloseWarningDialog = React.useCallback(() => {
     setIsWarningDialogOpen(false);
-  };
+  }, []);
+
+  const { ready, result, convertToGif } = useGifConverter();
+  const handleClickConvertToGif = React.useCallback(() => {
+    if (sourceVideo === null) {
+      return;
+    }
+    convertToGif(sourceVideo);
+  }, [sourceVideo, convertToGif]);
 
   return (
     <div className="flex flex-col items-center text-center">
@@ -34,14 +44,27 @@ const Home: React.FC = () => {
       />
       {sourceVideo && (
         <div className="mt-8">
-          <h2 className="text-xl mb-2">Source Video Preview</h2>
-          <video
-            controls
-            autoPlay
-            loop
-            width={300}
-            src={URL.createObjectURL(sourceVideo)}
-          ></video>
+          <section>
+            <h2 className="text-xl mb-2">Source Video Preview</h2>
+            <video
+              controls
+              autoPlay
+              loop
+              width={300}
+              src={URL.createObjectURL(sourceVideo)}
+            ></video>
+          </section>
+          {ready && (
+            <Button className="mt-8" onClick={handleClickConvertToGif}>
+              Convert to GIF
+            </Button>
+          )}
+          {result && (
+            <section className="mt-8">
+              <h2 className="text-xl mb-2">Result GIF Preview</h2>
+              <img width={300} src={result} alt="Result GIF" />
+            </section>
+          )}
         </div>
       )}
       <WarningDialog
