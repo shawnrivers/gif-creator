@@ -40,7 +40,15 @@ export function useGifConverter(): {
     try {
       const sourceBinary = await fetchFile(source);
       ffmpeg.FS('writeFile', SOURCE_FILE_NAME, sourceBinary);
-      await ffmpeg.run('-i', SOURCE_FILE_NAME, '-f', 'gif', RESULT_FILE_NAME);
+      await ffmpeg.run(
+        '-i',
+        SOURCE_FILE_NAME,
+        '-vf',
+        'fps=10,scale=iw*0.5:ih*0.5',
+        '-f',
+        'gif',
+        RESULT_FILE_NAME
+      );
       const resultBinary = ffmpeg.FS('readFile', RESULT_FILE_NAME);
       const resultBlob = new Blob([resultBinary.buffer], { type: 'image/gif' });
       const resultURL = URL.createObjectURL(resultBlob);
