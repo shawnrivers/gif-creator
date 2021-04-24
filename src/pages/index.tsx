@@ -4,6 +4,7 @@ import { Button } from 'components/Button';
 import { FileDropZoneProps, FileDropZone } from 'components/FileDropZone';
 import { WarningDialog } from 'components/WarningDialog';
 import { useGifConverter } from 'libs/ffmpeg';
+import { formatBytes } from 'utils/math';
 
 const Home: React.FC = () => {
   const [sourceVideo, setSourceVideo] = React.useState<File>();
@@ -53,6 +54,7 @@ const Home: React.FC = () => {
               width={300}
               src={URL.createObjectURL(sourceVideo)}
             ></video>
+            <p className="mt-2">Source size: {formatBytes(sourceVideo.size)}</p>
           </section>
           {ready && (
             <Button className="mt-8" onClick={handleClickConvertToGif}>
@@ -62,7 +64,10 @@ const Home: React.FC = () => {
           {result && (
             <section className="mt-8">
               <h2 className="text-xl mb-2">Result GIF Preview</h2>
-              <img width={300} src={result} alt="Result GIF" />
+              <a href={result.url} download className="cursor-pointer">
+                <img width={300} src={result.url} alt="Result GIF" />
+              </a>
+              <p className="mt-2">Result size: {formatBytes(result.size)}</p>
             </section>
           )}
         </div>
