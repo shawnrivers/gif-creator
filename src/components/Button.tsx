@@ -7,7 +7,7 @@ export const Button: React.FC<
     children: React.ReactNode;
   }
 > = props => {
-  const { className, children, processing = true, ...restProps } = props;
+  const { className, children, processing, ...restProps } = props;
   return (
     <button
       className={joinClassNames(
