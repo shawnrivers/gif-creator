@@ -4,13 +4,26 @@ import { FileDropZoneProps, FileDropZone } from 'components/FileDropZone';
 import { WarningDialog } from 'components/WarningDialog';
 import {
   FrameRate,
-  FRAME_RATE_OPTIONS,
   Resolution as Resolution,
-  RESOLUTION_OPTIONS,
   useGifConverter,
 } from 'libs/ffmpeg';
 import { formatBytes } from 'utils/math';
 import { Select } from 'components/Select';
+
+type FrameRateOptions = { text: string; value: FrameRate };
+type ResolutionOptions = { text: string; value: Resolution };
+const frameRateOptions: FrameRateOptions[] = [
+  { text: 'Default', value: null },
+  { text: '24 fps', value: 24 },
+  { text: '12 fps', value: 12 },
+  { text: '8 fps', value: 8 },
+];
+const resolutionOptions: ResolutionOptions[] = [
+  { text: '1.0', value: 1.0 },
+  { text: '0.75', value: 0.75 },
+  { text: '0.5', value: 0.5 },
+  { text: '0.25', value: 0.25 },
+];
 
 const Home: React.FC = () => {
   const [sourceVideo, setSourceVideo] = React.useState<File>();
@@ -34,22 +47,28 @@ const Home: React.FC = () => {
     setIsWarningDialogOpen(false);
   }, []);
 
-  const [frameRate, setFrameRate] = React.useState<FrameRate>('Default');
-  const [resolution, setResolution] = React.useState<Resolution>('1.0');
-  const handleChangeFrameRate = React.useCallback((frameRate: FrameRate) => {
-    setFrameRate(frameRate);
-  }, []);
-  const handleChangeResolution = React.useCallback((resolution: Resolution) => {
-    setResolution(resolution);
-  }, []);
+  const [frameRate, setFrameRate] = React.useState<FrameRate>(null);
+  const [resolution, setResolution] = React.useState<Resolution>(1.0);
+  const handleChangeFrameRate = React.useCallback(
+    (frameRateOption: FrameRateOptions) => {
+      setFrameRate(frameRateOption.value);
+    },
+    []
+  );
+  const handleChangeResolution = React.useCallback(
+    (resolutionOption: ResolutionOptions) => {
+      setResolution(resolutionOption.value);
+    },
+    []
+  );
 
   const { ready, processing, result, convertToGif } = useGifConverter();
   const handleClickConvertToGif = React.useCallback(() => {
     if (sourceVideo === null) {
       return;
     }
-    convertToGif(sourceVideo);
-  }, [sourceVideo, convertToGif]);
+    convertToGif(sourceVideo, { frameRate, resolution });
+  }, [sourceVideo, convertToGif, frameRate, resolution]);
 
   return (
     <div className="flex flex-col items-center text-center">
@@ -81,7 +100,7 @@ const Home: React.FC = () => {
                     <label htmlFor="fps">Frame rate</label>
                     <Select
                       id="fps"
-                      options={FRAME_RATE_OPTIONS}
+                      options={frameRateOptions}
                       className="mt-2"
                       onChange={handleChangeFrameRate}
                     />
@@ -90,7 +109,7 @@ const Home: React.FC = () => {
                     <label htmlFor="fps">Resolution</label>
                     <Select
                       id="fps"
-                      options={RESOLUTION_OPTIONS}
+                      options={resolutionOptions}
                       className="mt-2"
                       onChange={handleChangeResolution}
                     />

@@ -6,26 +6,27 @@ const ffmpeg = createFFmpeg();
 const SOURCE_FILE_NAME = 'source.mp4';
 const RESULT_FILE_NAME = 'target.gif';
 
-export type FrameRate = 'Default' | '24 fps' | '12 fps' | '8 fps';
-export type Resolution = '1.0' | '0.75' | '0.5';
-export const FRAME_RATE_OPTIONS: FrameRate[] = [
-  'Default',
-  '24 fps',
-  '12 fps',
-  '8 fps',
-];
-export const RESOLUTION_OPTIONS: Resolution[] = ['1.0', '0.75', '0.5'];
+export type FrameRate = 24 | 12 | 8 | null;
+export type Resolution = 1.0 | 0.75 | 0.5 | 0.25;
 
 type GifResult = {
   url: string;
   size: number;
 };
 
+type ConvertToGif = (
+  source: File,
+  options: {
+    frameRate: FrameRate;
+    resolution: Resolution;
+  }
+) => Promise<void>;
+
 export function useGifConverter(): {
   ready: boolean;
   processing: boolean;
   result: GifResult | null;
-  convertToGif(source: File): Promise<void>;
+  convertToGif: ConvertToGif;
 } {
   const [ready, setReady] = React.useState(false);
   const [processing, setProcessing] = React.useState(false);
@@ -45,29 +46,36 @@ export function useGifConverter(): {
     load();
   }, []);
 
-  const convertToGif = React.useCallback(async (source: File) => {
-    setProcessing(true);
-    try {
-      const sourceBinary = await fetchFile(source);
-      ffmpeg.FS('writeFile', SOURCE_FILE_NAME, sourceBinary);
-      await ffmpeg.run(
-        '-i',
-        SOURCE_FILE_NAME,
-        '-vf',
-        'fps=10,scale=iw*0.5:ih*0.5',
-        '-f',
-        'gif',
-        RESULT_FILE_NAME
-      );
-      const resultBinary = ffmpeg.FS('readFile', RESULT_FILE_NAME);
-      const resultBlob = new Blob([resultBinary.buffer], { type: 'image/gif' });
-      const resultURL = URL.createObjectURL(resultBlob);
-      setResult({ url: resultURL, size: resultBlob.size });
-      setProcessing(false);
-    } catch {
-      setProcessing(false);
-    }
-  }, []);
+  const convertToGif = React.useCallback<ConvertToGif>(
+    async (source, options) => {
+      setProcessing(true);
+      try {
+        const sourceBinary = await fetchFile(source);
+        ffmpeg.FS('writeFile', SOURCE_FILE_NAME, sourceBinary);
+        await ffmpeg.run(
+          '-i',
+          SOURCE_FILE_NAME,
+          '-vf',
+          `scale=iw*${options.resolution}:ih*${options.resolution}${
+            options.frameRate ? `,fps=${options.frameRate}` : ''
+          }`,
+          '-f',
+          'gif',
+          RESULT_FILE_NAME
+        );
+        const resultBinary = ffmpeg.FS('readFile', RESULT_FILE_NAME);
+        const resultBlob = new Blob([resultBinary.buffer], {
+          type: 'image/gif',
+        });
+        const resultURL = URL.createObjectURL(resultBlob);
+        setResult({ url: resultURL, size: resultBlob.size });
+        setProcessing(false);
+      } catch {
+        setProcessing(false);
+      }
+    },
+    []
+  );
 
   return { ready, processing, result, convertToGif };
 }
