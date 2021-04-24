@@ -1,23 +1,29 @@
+import { WarningDialog } from 'components/WarningDialog';
 import * as React from 'react';
 import { useDropzone } from 'react-dropzone';
-import { joinClassNames } from '../utils/class';
+import { joinClassNames } from 'utils/class';
 
-const VALID_FILE_TYPES = ['image/gif', 'video/mp4'];
+const VALID_FILE_TYPES = ['video/mp4'];
 
-const FileDropZone: React.FC<{
+type FileDropZoneProps = {
   className?: string;
   onFileLoaded(file: File): void;
-}> = props => {
+  onFileLoadFailed(message: string): void;
+};
+
+const FileDropZone: React.FC<FileDropZoneProps> = props => {
   const handleDrop = (files: File[]) => {
     console.log('File dropped', files);
     if (files.length !== 1) {
-      console.log('Please only upload 1 file');
+      props.onFileLoadFailed(
+        "You' are trying to upload too many files. Please only upload one file once."
+      );
       return;
     }
     const file = files[0];
 
     if (!VALID_FILE_TYPES.includes(file.type)) {
-      console.log('Invalid file type');
+      props.onFileLoadFailed('Invalid file type.');
       return;
     }
 
@@ -50,32 +56,50 @@ const FileDropZone: React.FC<{
 
 const Home: React.FC = () => {
   const [sourceVideo, setSourceVideo] = React.useState<File>();
+  const [isWarningDialogOpen, setIsWarningDialogOpen] = React.useState(false);
+  const [warningText, setWarningText] = React.useState('');
+
+  const handleFileUploadFail = React.useCallback<
+    FileDropZoneProps['onFileLoadFailed']
+  >(
+    message => {
+      setWarningText(message);
+      setIsWarningDialogOpen(true);
+    },
+    [setIsWarningDialogOpen, setWarningText]
+  );
+
+  const handleCloseWarningDialog = () => {
+    setIsWarningDialogOpen(false);
+  };
 
   return (
-    <div className="flex flex-col items-center text-center font-mono">
+    <div className="flex flex-col items-center text-center">
       <h1 className="text-4xl font-bold mt-8">GIF Creator</h1>
       <FileDropZone
         className="mt-8"
         onFileLoaded={file => {
           setSourceVideo(file);
         }}
+        onFileLoadFailed={handleFileUploadFail}
       />
       {sourceVideo && (
         <div className="mt-8">
-          <h2 className="text-xl mb-2">Preview</h2>
-          {sourceVideo.type === 'video/mp4' ? (
-            <video
-              controls
-              autoPlay
-              loop
-              width={300}
-              src={URL.createObjectURL(sourceVideo)}
-            ></video>
-          ) : (
-            <img src={URL.createObjectURL(sourceVideo)} alt="" width={300} />
-          )}
+          <h2 className="text-xl mb-2">Source Video Preview</h2>
+          <video
+            controls
+            autoPlay
+            loop
+            width={300}
+            src={URL.createObjectURL(sourceVideo)}
+          ></video>
         </div>
       )}
+      <WarningDialog
+        open={isWarningDialogOpen}
+        text={warningText}
+        onClose={handleCloseWarningDialog}
+      ></WarningDialog>
     </div>
   );
 };
