@@ -7,7 +7,7 @@ const SOURCE_FILE_NAME = 'source.mp4';
 const RESULT_FILE_NAME = 'target.gif';
 
 export type FrameRate = 24 | 12 | 8 | null;
-export type Resolution = 1.0 | 0.75 | 0.5 | 0.25;
+export type Resolution = 1.0 | 0.8 | 0.6 | 0.4 | 0.2;
 
 type GifResult = {
   url: string;
