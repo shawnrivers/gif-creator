@@ -1,4 +1,4 @@
-# GIF Creator
+# To GIF
 
 A simple web app that generates GIF from video file using FFmpeg WASM.
 
