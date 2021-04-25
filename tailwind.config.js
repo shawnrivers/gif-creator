@@ -5,7 +5,13 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+      outline: ['focus-visible'],
+      ringColor: ['focus-visible'],
+      ringOpacity: ['focus-visible'],
+      ringWidth: ['focus-visible'],
+      ringOffsetWidth: ['focus-visible'],
+    },
   },
   plugins: [],
 };

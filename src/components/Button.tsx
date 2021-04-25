@@ -13,9 +13,10 @@ export const Button: React.FC<
       className={joinClassNames(
         `inline-flex items-center justify-center px-4 py-2 ${
           processing ? 'bg-red-500' : 'bg-gray-600'
-        } text-white shadow-md rounded-md`,
+        } text-white shadow-md rounded-md focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-indigo-300`,
         className
       )}
+      disabled={processing}
       {...restProps}
     >
       {processing && (
