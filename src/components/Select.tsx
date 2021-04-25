@@ -45,12 +45,12 @@ export const Select: React.FC<{
             <Listbox.Option
               key={i}
               className={({ active }) =>
-                `${active ? 'text-blue-900 bg-blue-100' : 'text-gray-900'}
+                `${active ? 'text-indigo-900 bg-indigo-100' : 'text-gray-900'}
                           cursor-pointer select-none relative py-2 pl-8 pr-4`
               }
               value={option}
             >
-              {({ selected, active }) => (
+              {({ selected }) => (
                 <>
                   <span
                     className={`${
@@ -62,7 +62,7 @@ export const Select: React.FC<{
                   {selected ? (
                     <span
                       className={
-                        'text-blue-600 absolute inset-y-0 left-0 flex items-center pl-2'
+                        'text-indigo-600 absolute inset-y-0 left-0 flex items-center pl-2'
                       }
                     >
                       <CheckIcon className="w-5 h-5" aria-hidden="true" />
