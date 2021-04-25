@@ -31,7 +31,7 @@ export const Select: React.FC<{
       {...restProps}
     >
       <div className="relative mt-1">
-        <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-gray-200 rounded-lg border-2 border-gray-700 shadow-md cursor-pointer sm:text-sm focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-indigo-300 hover:bg-gray-100">
+        <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-gray-200 rounded-lg border-2 border-gray-700 shadow-md cursor-pointer sm:text-sm focus:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-indigo-300 hover:bg-gray-100">
           <span className="block truncate">{selected.text}</span>
           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <SelectorIcon
