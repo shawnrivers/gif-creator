@@ -53,7 +53,11 @@ export const FileDropZone: React.FC<FileDropZoneProps> = props => {
     >
       <input {...getInputProps()} />
       <UploadIcon className="w-7 h-7 text-gray-900" aria-hidden />
-      <p className="text-xl mt-4">Drop file or click to upload file</p>
+      <p className="text-xl mt-4">
+        Drop file here or click
+        <br />
+        to upload a .mp4 file
+      </p>
     </div>
   );
 };
