@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Listbox } from '@headlessui/react';
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import { CheckIcon, SelectorIcon } from '@heroicons/react/outline';
 import { joinClassNames } from 'utils/class';
 
 type Option = { text: string; value: string | number };
