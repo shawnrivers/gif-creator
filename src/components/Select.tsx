@@ -61,9 +61,9 @@ export const Select: React.FC<{
                   </span>
                   {selected ? (
                     <span
-                      className={`${
-                        active ? 'text-blue-600' : 'text-blue-600'
-                      } absolute inset-y-0 left-0 flex items-center pl-2`}
+                      className={
+                        'text-blue-600 absolute inset-y-0 left-0 flex items-center pl-2'
+                      }
                     >
                       <CheckIcon className="w-5 h-5" aria-hidden="true" />
                     </span>

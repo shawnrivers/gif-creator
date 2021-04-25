@@ -89,7 +89,7 @@ const Home: React.FC = () => {
               controls
               autoPlay
               loop
-              className="w-80 h-80 object-contain"
+              className="w-80 h-72 object-contain"
               src={URL.createObjectURL(sourceVideo)}
             ></video>
             <p className="mt-2">Source size: {formatBytes(sourceVideo.size)}</p>
@@ -136,14 +136,14 @@ const Home: React.FC = () => {
                 <img
                   src={result.url}
                   alt="Result GIF"
-                  className="w-80 h-80 object-contain"
+                  className="w-80 h-72 object-contain"
                 />
               </a>
               <p className="mt-2">Result size: {formatBytes(result.size)}</p>
               <Button component="a" href={result.url} download className="mt-4">
                 <div className="flex items-center">
                   <DownloadIcon className="w-5 h-5" aria-hidden />
-                  <span className="ml-2">Download result</span>
+                  <span className="ml-2">Download Result</span>
                 </div>
               </Button>
             </section>
