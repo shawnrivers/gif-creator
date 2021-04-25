@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useDropzone } from 'react-dropzone';
 import type { DropzoneOptions } from 'react-dropzone';
 import { joinClassNames } from 'utils/class';
+import { UploadIcon } from '@heroicons/react/outline';
 
 const VALID_FILE_TYPES = ['video/mp4'];
 
@@ -24,7 +25,7 @@ export const FileDropZone: React.FC<FileDropZoneProps> = props => {
       const file = files[0];
 
       if (!VALID_FILE_TYPES.includes(file.type)) {
-        onFileLoadFailed('Invalid file type.');
+        onFileLoadFailed('Invalid file type.\nPlease upload a MP4 file.');
         return;
       }
 
@@ -45,13 +46,14 @@ export const FileDropZone: React.FC<FileDropZoneProps> = props => {
           isDragActive
             ? 'bg-gray-200 border-gray-500 border-dashed'
             : 'bg-gray-400 border-gray-900 border-solid'
-        } max-w-4xl min-h-full px-8 py-12 rounded-lg border-2 shadow-md flex items-center justify-center cursor-pointer`,
+        } max-w-4xl min-h-full px-8 py-12 rounded-lg border-2 shadow-md flex flex-col items-center justify-center cursor-pointer`,
         props.className
       )}
       {...getRootProps()}
     >
       <input {...getInputProps()} />
-      <p className="text-xl">Drop file or click to upload file</p>
+      <UploadIcon className="w-7 h-7 text-gray-900" aria-hidden />
+      <p className="text-xl mt-4">Drop file or click to upload file</p>
     </div>
   );
 };

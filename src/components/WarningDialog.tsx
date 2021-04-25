@@ -50,7 +50,7 @@ export const WarningDialog: React.FC<WarningDialogProps> = props => {
               <Dialog.Title as="h2" className="text-2xl text-gray-600">
                 WARNING
               </Dialog.Title>
-              <Dialog.Description className="text-xl mt-4 text-gray-900">
+              <Dialog.Description className="text-xl mt-4 text-gray-900 whitespace-pre-wrap">
                 {props.text}
               </Dialog.Description>
               <Button className="mt-4" onClick={props.onClose}>
