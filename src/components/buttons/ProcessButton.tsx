@@ -1,7 +1,7 @@
-import * as React from 'react';
+import { Button } from './Button';
 import { joinClassNames } from 'utils/class';
 
-export const Button: React.FC<
+export const ProcessButton: React.FC<
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
     processing?: boolean;
     children: React.ReactNode;
@@ -9,11 +9,14 @@ export const Button: React.FC<
 > = props => {
   const { className, children, processing, ...restProps } = props;
   return (
-    <button
+    <Button
+      component="button"
       className={joinClassNames(
-        `inline-flex items-center justify-center px-4 py-2 ${
-          processing ? 'bg-red-500' : 'bg-gray-600'
-        } text-white shadow-md rounded-md focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-indigo-300 hover:bg-gray-500`,
+        `${
+          processing
+            ? 'bg-red-500 hover:bg-red-500 hover:cursor-default'
+            : 'bg-gray-600'
+        }`,
         className
       )}
       disabled={processing}
@@ -42,6 +45,6 @@ export const Button: React.FC<
         </svg>
       )}
       <span>{processing ? 'Processing...' : children}</span>
-    </button>
+    </Button>
   );
 };

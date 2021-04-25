@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button } from 'components/Button';
+import { ProcessButton } from 'components/buttons/ProcessButton';
 import { FileDropZoneProps, FileDropZone } from 'components/FileDropZone';
 import { WarningDialog } from 'components/WarningDialog';
 import {
@@ -118,12 +118,12 @@ const Home: React.FC = () => {
                 </div>
               </section>
               <section className="mt-6">
-                <Button
+                <ProcessButton
                   processing={processing}
                   onClick={handleClickConvertToGif}
                 >
                   Convert to GIF
-                </Button>
+                </ProcessButton>
               </section>
             </>
           )}

@@ -11,6 +11,8 @@ module.exports = {
       ringOpacity: ['focus-visible'],
       ringWidth: ['focus-visible'],
       ringOffsetWidth: ['focus-visible'],
+      opacity: ['disabled'],
+      cursor: ['hover'],
     },
   },
   plugins: [],

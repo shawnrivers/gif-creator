@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { Button } from './Button';
+import { ProcessButton } from './buttons/ProcessButton';
 
 type WarningDialogProps = {
   open: boolean;
@@ -53,9 +53,9 @@ export const WarningDialog: React.FC<WarningDialogProps> = props => {
               <Dialog.Description className="text-xl mt-4 text-gray-900 whitespace-pre-wrap">
                 {props.text}
               </Dialog.Description>
-              <Button className="mt-4" onClick={props.onClose}>
+              <ProcessButton className="mt-4" onClick={props.onClose}>
                 OK
-              </Button>
+              </ProcessButton>
             </div>
           </Transition.Child>
         </div>
