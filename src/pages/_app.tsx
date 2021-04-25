@@ -20,6 +20,11 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
           name="og:description"
           content="A web app that generates GIF from video file using FFmpeg WASM"
         />
+        <meta name="og:image" content="/icon.png" />
+        <meta name="og:image:type" content="image/png" />
+        <meta name="og:image:width" content="1024" />
+        <meta name="og:image:height" content="1024" />
+        <meta name="og:image:alt" content="To GIF" />
         <meta name="og:type" content="website" />
         <meta name="og:url" content="togif.vercel.app" />
         <meta name="og:image:alt" content="To GIF" />
