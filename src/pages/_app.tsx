@@ -20,7 +20,10 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
           name="og:description"
           content="A web app that generates GIF from video file using FFmpeg WASM"
         />
-        <meta name="og:image" content="/icon.png" />
+        <meta
+          name="og:image"
+          content="https://raw.githubusercontent.com/shawnrivers/to-gif/main/public/Icon.png"
+        />
         <meta name="og:image:type" content="image/png" />
         <meta name="og:image:width" content="1024" />
         <meta name="og:image:height" content="1024" />
