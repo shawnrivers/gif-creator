@@ -72,7 +72,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center text-center">
-      <h1 className="text-4xl font-bold">GIF Creator</h1>
+      <h1 className="text-4xl font-bold">To GIF</h1>
       <FileDropZone
         className="mt-8"
         onFileLoaded={handleLoadFile}
