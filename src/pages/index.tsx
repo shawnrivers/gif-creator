@@ -21,11 +21,11 @@ const frameRateOptions: FrameRateOptions[] = [
   { text: '8 fps', value: 8 },
 ];
 const resolutionOptions: ResolutionOptions[] = [
-  { text: '1.0', value: 1.0 },
-  { text: '0.8', value: 0.8 },
-  { text: '0.6', value: 0.6 },
-  { text: '0.4', value: 0.4 },
-  { text: '0.2', value: 0.2 },
+  { text: '* 1.0', value: 1.0 },
+  { text: '* 0.8', value: 0.8 },
+  { text: '* 0.6', value: 0.6 },
+  { text: '* 0.4', value: 0.4 },
+  { text: '* 0.2', value: 0.2 },
 ];
 
 const Home: React.FC = () => {
