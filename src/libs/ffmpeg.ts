@@ -3,7 +3,11 @@ import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 
 const ffmpeg = createFFmpeg();
 
-export const VALID_VIDEO_FILE_TYPES = ['video/mp4', 'video/quicktime'];
+export const VALID_VIDEO_FILE_TYPES = [
+  'video/mp4',
+  'video/quicktime',
+  'image/gif',
+];
 
 const RESULT_FILE_NAME = 'target.gif';
 

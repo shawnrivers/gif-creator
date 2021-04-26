@@ -85,13 +85,21 @@ const Home: React.FC = () => {
         <div className="mt-8 flex flex-col justify-center">
           <section>
             <h2 className="text-xl font-bold mb-2">Source Video Preview</h2>
-            <video
-              controls
-              autoPlay
-              loop
-              className="w-80 h-72 object-contain"
-              src={URL.createObjectURL(sourceVideo)}
-            ></video>
+            {sourceVideo.type === 'image/gif' ? (
+              <img
+                src={URL.createObjectURL(sourceVideo)}
+                alt="Source video"
+                className="w-80 h-72 object-contain"
+              />
+            ) : (
+              <video
+                controls
+                autoPlay
+                loop
+                className="w-80 h-72 object-contain"
+                src={URL.createObjectURL(sourceVideo)}
+              ></video>
+            )}
             <p className="mt-2">Source size: {formatBytes(sourceVideo.size)}</p>
           </section>
           {ready && (
