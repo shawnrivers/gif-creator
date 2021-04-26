@@ -25,7 +25,7 @@ export const FileDropZone: React.FC<FileDropZoneProps> = props => {
 
       if (!VALID_VIDEO_FILE_TYPES.includes(file.type)) {
         onFileLoadFailed(
-          'Invalid file type.\nThe available file formats are\n.mp4, .mov'
+          'Invalid file type.\nThe available file formats are\n.mp4, .mov, .gif'
         );
         return;
       }
