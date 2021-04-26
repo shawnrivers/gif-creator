@@ -4,7 +4,7 @@ A simple web app that generates GIF from video file using FFmpeg WASM.
 
 ## Features
 
-- Convert `.mp4` file to `.gif` file
+- Convert video files to `.gif` files
 - Configurate frame rate and resolution to adjust file size
 
 ## Deployment

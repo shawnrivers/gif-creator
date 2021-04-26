@@ -3,7 +3,8 @@ import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 
 const ffmpeg = createFFmpeg();
 
-const SOURCE_FILE_NAME = 'source.mp4';
+export const VALID_VIDEO_FILE_TYPES = ['video/mp4', 'video/quicktime'];
+
 const RESULT_FILE_NAME = 'target.gif';
 
 export type FrameRate = 24 | 12 | 8 | null;
@@ -51,10 +52,10 @@ export function useGifConverter(): {
       setProcessing(true);
       try {
         const sourceBinary = await fetchFile(source);
-        ffmpeg.FS('writeFile', SOURCE_FILE_NAME, sourceBinary);
+        ffmpeg.FS('writeFile', source.name, sourceBinary);
         await ffmpeg.run(
           '-i',
-          SOURCE_FILE_NAME,
+          source.name,
           '-vf',
           `scale=iw*${options.resolution}:ih*${options.resolution}${
             options.frameRate ? `,fps=${options.frameRate}` : ''

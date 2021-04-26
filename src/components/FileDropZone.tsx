@@ -3,8 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import type { DropzoneOptions } from 'react-dropzone';
 import { joinClassNames } from 'utils/class';
 import { UploadIcon } from '@heroicons/react/outline';
-
-const VALID_FILE_TYPES = ['video/mp4'];
+import { VALID_VIDEO_FILE_TYPES } from 'libs/ffmpeg';
 
 export type FileDropZoneProps = {
   className?: string;
@@ -24,8 +23,10 @@ export const FileDropZone: React.FC<FileDropZoneProps> = props => {
 
       const file = files[0];
 
-      if (!VALID_FILE_TYPES.includes(file.type)) {
-        onFileLoadFailed('Invalid file type.\nPlease upload a MP4 file.');
+      if (!VALID_VIDEO_FILE_TYPES.includes(file.type)) {
+        onFileLoadFailed(
+          'Invalid file type.\nThe available file formats are\n.mp4, .mov'
+        );
         return;
       }
 
@@ -56,7 +57,7 @@ export const FileDropZone: React.FC<FileDropZoneProps> = props => {
       <p className="text-xl mt-4">
         Drop file here or click
         <br />
-        to upload a .mp4 file
+        to upload a video file
       </p>
     </div>
   );
