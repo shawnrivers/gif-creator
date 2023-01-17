@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const config = {
+  reactStrictMode: true,
   async headers() {
     // Add cross-origin headers because SharedArrayBuffer is
     // limited to cross-origin isolated pages after Chrome 92.
