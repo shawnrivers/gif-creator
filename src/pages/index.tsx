@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ProcessButton } from 'components/buttons/ProcessButton';
 import { FileDropZoneProps, FileDropZone } from 'components/FileDropZone';
 import { WarningDialog } from 'components/WarningDialog';
@@ -11,6 +10,7 @@ import { formatBytes } from 'utils/math';
 import { Select } from 'components/Select';
 import { Button } from 'components/buttons/Button';
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline';
+import { useState, useCallback } from 'react';
 
 type FrameRateOptions = { text: string; value: FrameRate };
 type ResolutionOptions = { text: string; value: Resolution };
@@ -29,16 +29,14 @@ const resolutionOptions: ResolutionOptions[] = [
 ];
 
 const Home: React.FC = () => {
-  const [sourceVideo, setSourceVideo] = React.useState<File>();
-  const [isWarningDialogOpen, setIsWarningDialogOpen] = React.useState(false);
-  const [warningText, setWarningText] = React.useState('');
+  const [sourceVideo, setSourceVideo] = useState<File>();
+  const [isWarningDialogOpen, setIsWarningDialogOpen] = useState(false);
+  const [warningText, setWarningText] = useState('');
 
-  const handleLoadFile = React.useCallback((file: File) => {
+  const handleLoadFile = useCallback((file: File) => {
     setSourceVideo(file);
   }, []);
-  const handleFileLoadFail = React.useCallback<
-    FileDropZoneProps['onFileLoadFailed']
-  >(
+  const handleFileLoadFail = useCallback<FileDropZoneProps['onFileLoadFailed']>(
     message => {
       setSourceVideo(null);
       setWarningText(message);
@@ -46,19 +44,19 @@ const Home: React.FC = () => {
     },
     [setIsWarningDialogOpen, setWarningText]
   );
-  const handleCloseWarningDialog = React.useCallback(() => {
+  const handleCloseWarningDialog = useCallback(() => {
     setIsWarningDialogOpen(false);
   }, []);
 
-  const [frameRate, setFrameRate] = React.useState<FrameRate>(null);
-  const [resolution, setResolution] = React.useState<Resolution>(1.0);
-  const handleChangeFrameRate = React.useCallback(
+  const [frameRate, setFrameRate] = useState<FrameRate>(null);
+  const [resolution, setResolution] = useState<Resolution>(1.0);
+  const handleChangeFrameRate = useCallback(
     (frameRateOption: FrameRateOptions) => {
       setFrameRate(frameRateOption.value);
     },
     []
   );
-  const handleChangeResolution = React.useCallback(
+  const handleChangeResolution = useCallback(
     (resolutionOption: ResolutionOptions) => {
       setResolution(resolutionOption.value);
     },
@@ -66,7 +64,7 @@ const Home: React.FC = () => {
   );
 
   const { ready, processing, result, convertToGif } = useGifConverter();
-  const handleClickConvertToGif = React.useCallback(() => {
+  const handleClickConvertToGif = useCallback(() => {
     if (sourceVideo === null) {
       return;
     }
