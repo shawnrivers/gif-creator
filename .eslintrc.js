@@ -2,12 +2,7 @@ module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
-  extends: [
-    'prettier',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:jsx-a11y/recommended',
-  ],
+  extends: ['prettier', 'plugin:@next/next/recommended'],
   parserOptions: {
     ecmaVersion: 2021,
   },
@@ -20,8 +15,7 @@ module.exports = {
     browser: true,
   },
   rules: {
-    'react/react-in-jsx-scope': 'off',
-    'react/prop-types': 'off',
     'jsx-a11y/media-has-caption': 'off',
+    '@next/next/no-img-element': 'off',
   },
 };

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Listbox } from '@headlessui/react';
-import { CheckIcon, SelectorIcon } from '@heroicons/react/outline';
+import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/outline';
 import { joinClassNames } from 'utils/class';
 
 type Option = { text: string; value: string | number };
@@ -34,7 +34,7 @@ export const Select: React.FC<{
         <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-gray-200 rounded-lg border-2 border-gray-700 shadow-md cursor-pointer sm:text-sm focus:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-indigo-300 hover:bg-gray-100">
           <span className="block truncate">{selected.text}</span>
           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-            <SelectorIcon
+            <ChevronUpDownIcon
               className="w-5 h-5 text-gray-700"
               aria-hidden="true"
             />

@@ -1,9 +1,7 @@
-module.exports = {
-  future: {
-    webpack5: true,
-  },
+/** @type {import('next').NextConfig} */
+const config = {
   async headers() {
-    // Add cross-origin headers because SharedArrayBuffer is 
+    // Add cross-origin headers because SharedArrayBuffer is
     // limited to cross-origin isolated pages after Chrome 92.
     // https://github.com/ffmpegwasm/ffmpeg.wasm/issues/231
     return [
@@ -23,3 +21,5 @@ module.exports = {
     ];
   },
 };
+
+module.exports = config;

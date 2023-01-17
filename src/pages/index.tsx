@@ -10,7 +10,7 @@ import {
 import { formatBytes } from 'utils/math';
 import { Select } from 'components/Select';
 import { Button } from 'components/buttons/Button';
-import { DownloadIcon } from '@heroicons/react/outline';
+import { ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 
 type FrameRateOptions = { text: string; value: FrameRate };
 type ResolutionOptions = { text: string; value: Resolution };
@@ -150,7 +150,7 @@ const Home: React.FC = () => {
               <p className="mt-2">Result size: {formatBytes(result.size)}</p>
               <Button component="a" href={result.url} download className="mt-4">
                 <div className="flex items-center">
-                  <DownloadIcon className="w-5 h-5" aria-hidden />
+                  <ArrowDownTrayIcon className="w-5 h-5" aria-hidden />
                   <span className="ml-2">Download Result</span>
                 </div>
               </Button>

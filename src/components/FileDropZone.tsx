@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useDropzone } from 'react-dropzone';
 import type { DropzoneOptions } from 'react-dropzone';
 import { joinClassNames } from 'utils/class';
-import { UploadIcon } from '@heroicons/react/outline';
 import { VALID_VIDEO_FILE_TYPES } from 'libs/ffmpeg';
+import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 
 export type FileDropZoneProps = {
   className?: string;
@@ -53,7 +53,7 @@ export const FileDropZone: React.FC<FileDropZoneProps> = props => {
       {...getRootProps()}
     >
       <input {...getInputProps()} />
-      <UploadIcon className="w-7 h-7 text-gray-900" aria-hidden />
+      <ArrowUpTrayIcon className="w-7 h-7 text-gray-900" aria-hidden />
       <p className="text-xl mt-4">
         Drop file here or click
         <br />
